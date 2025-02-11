@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "fbspider",
+  "key": "fbspider",
+  "version": "2.0.4",
+  "description": "fbspider cross-platform data connection extension!",
+  "icons": {
+    "48": "icon_64.png"
+  },
+  "permissions": [
+    "notifications",
+    "tabs",
+    "activeTab",
+    "declarativeContent",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "declarativeNetRequestFeedback",
+    "unlimitedStorage",
+    "management",
+    "cookies",
+    "contextMenus",
+    "browsingData",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["html/table.html","html/table_right.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon_64.png",
+      "48": "icon_64.png",
+      "128": "icon_64.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://adsmanager.facebook.com/*","https://business.facebook.com/billing_hub/accounts/details/*","https://business.facebook.com/billing_hub/payment_settings*","https://business.facebook.com/billing_hub/payment_activity*"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://business.facebook.com/billing_hub/accounts/*","https://business.facebook.com/billing_hub/payment_settings*"],
+      "js": ["content-right-tools.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://fbspider.com/*"],
+      "js": ["content-main.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
